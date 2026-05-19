@@ -71,7 +71,7 @@ while True:
 
     # Sınıflara göre ayır
     persons = [d for d in dets if d["class_name"] == "person"]
-    helmets = [d for d in dets if "helmet" in d["class_name"]
+    helmets = [d for d in dets if ("helmet" in d["class_name"] or "hardhat" in d["class_name"])
                and "no" not in d["class_name"]]
     vests   = [d for d in dets if "vest"   in d["class_name"]
                and "no" not in d["class_name"]]

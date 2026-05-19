@@ -58,7 +58,9 @@ class PPEDetector:
         thresholds = {
             "person": config.PERSON_CONF,
             "helmet": config.HELMET_CONF,
+            "hardhat": config.HELMET_CONF,
             "vest":   config.VEST_CONF,
+            "safety vest": config.VEST_CONF,
             "mask":   config.MASK_CONF,
             "glove":  config.GLOVE_CONF,
         }
