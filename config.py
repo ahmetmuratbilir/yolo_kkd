@@ -55,6 +55,15 @@ REQUIRED_EQUIPMENTS = {
     "right_glove": True,
 }
 
+# ── Güvenlik İhlal & Alarm Ayarları ─────────────────────────
+SAVE_ALERTS    = True       # İhlal anlarında resim ve log dosyası kaydeder
+ALERT_DIR      = "alerts"   # Kaydedilecek klasör adı
+ALERT_COOLDOWN = 5.0        # İki ihlal resmi kaydı arasındaki minimum saniye (kişi başı)
+PLAY_SOUND     = True       # İhlal anında bip sesi çalar
+
+# ── İskelet Takibi (MediaPipe Pose) ─────────────────────────
+ENABLE_MEDIAPIPE = True     # Eldiven/el bölgesi analizi için MediaPipe aktif eder
+
 # ── Görsel ayarlar ───────────────────────────────────────────
 FONT            = 0   # cv2.FONT_HERSHEY_SIMPLEX
 FONT_SCALE      = 0.55

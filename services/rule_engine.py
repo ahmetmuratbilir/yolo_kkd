@@ -5,6 +5,7 @@ import config
 from services.glove_color_detector import (
     glove_detected_by_color,
     make_hand_boxes_from_person,
+    make_wrist_box,
 )
 
 
@@ -51,22 +52,10 @@ def assign_equipment_to_persons(
     vests:    list[dict],
     masks:    list[dict],
     gloves:   list[dict],
+    wrists:   list[dict] = None,
 ) -> list[dict]:
     """
     Her kişi için KKD durumunu belirler.
-
-    Dönen liste öğesi:
-        {
-            "person_id": int,
-            "box": [x1,y1,x2,y2],
-            "helmet": bool,
-            "vest": bool,
-            "mask": bool,
-            "left_glove": bool,
-            "right_glove": bool,
-            "warnings": [str, ...],
-            "safe": bool,
-        }
     """
     results = []
 
@@ -111,8 +100,18 @@ def assign_equipment_to_persons(
             else:
                 status["right_glove"] = True
 
-        # ── Eldiven: renk analizi (fallback) ────────────────────────── #
+        # ── Eldiven: renk analizi (fallback / Pose ile hassas kontrol) ── #
+        # Heuristics (tahmini kutular) varsayılan olarak alınır
         left_box, right_box = make_hand_boxes_from_person(pbox)
+
+        # Eğer MediaPipe iskelet koordinatları varsa, onları kullan
+        if wrists:
+            for w in wrists:
+                # Bilek koordinatı bu kişinin kutusu içindeyse
+                if w.get("left_wrist") and _inside(w["left_wrist"], pbox):
+                    left_box = make_wrist_box(w["left_wrist"][0], w["left_wrist"][1], size=int((pbox[3] - pbox[1]) * 0.08))
+                if w.get("right_wrist") and _inside(w["right_wrist"], pbox):
+                    right_box = make_wrist_box(w["right_wrist"][0], w["right_wrist"][1], size=int((pbox[3] - pbox[1]) * 0.08))
 
         if not status["left_glove"]:
             status["left_glove"]  = glove_detected_by_color(frame, left_box)

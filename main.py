@@ -4,15 +4,20 @@
 import sys
 import time
 import cv2
+import threading
 
 import config
 from services.detector         import PPEDetector
 from services.rule_engine      import assign_equipment_to_persons
 from services.drawing          import draw_person_status, draw_fps, draw_header
+from services.pose_detector    import PoseDetector
+from services.logger           import ViolationLogger
 
 
-# ── Modeli yükle ─────────────────────────────────────────── #
+# ── Servisleri ve Modeli yükle ───────────────────────────── #
 detector = PPEDetector(config.MODEL_PATH)
+pose_detector = PoseDetector()
+violation_logger = ViolationLogger()
 
 # Modelin hangi sınıfları bildiğini al
 MODEL_CLASSES = set(detector.model.names[i].lower()
@@ -20,6 +25,16 @@ MODEL_CLASSES = set(detector.model.names[i].lower()
 
 print("\n[main] Model sınıfları:", MODEL_CLASSES)
 print("[main] 'q' tuşu ile çıkabilirsiniz.\n")
+
+
+# ── Yardımcı Fonksiyonlar ────────────────────────────────── #
+def play_alert_sound():
+    """Arka planda uyarı bip sesi çalar."""
+    try:
+        import winsound
+        winsound.Beep(1200, 250)  # 1200 Hz frekans, 250 ms süre
+    except Exception:
+        pass
 
 
 # ── Kamera aç ────────────────────────────────────────────── #
@@ -42,12 +57,19 @@ while True:
         print("[HATA] Kare okunamadı.")
         break
 
-    # ── Tespit ──────────────────────────────────────────── #
+    # Kopya kare al (çizimsiz temiz kareyi loglamak için)
+    clean_frame = frame.copy()
+
+    # ── İskelet Takibi (MediaPipe) ──────────────────────── #
+    wrists = None
+    if getattr(config, "ENABLE_MEDIAPIPE", True):
+        wrists = pose_detector.find_wrists(frame)
+
+    # ── Nesne Tespiti (YOLO) ────────────────────────────── #
     raw = detector.detect(frame)
     dets = detector.filter_by_class_conf(raw)
 
     # Sınıflara göre ayır
-    # Model "no-helmet" gibi negatif sınıf içerebilir; biz pozitif olanı kullanıyoruz
     persons = [d for d in dets if d["class_name"] == "person"]
     helmets = [d for d in dets if "helmet" in d["class_name"]
                and "no" not in d["class_name"]]
@@ -60,7 +82,7 @@ while True:
 
     # ── Kural motoru ────────────────────────────────────── #
     results = assign_equipment_to_persons(
-        frame, persons, helmets, vests, masks, gloves
+        frame, persons, helmets, vests, masks, gloves, wrists=wrists
     )
 
     # ── Çizim ───────────────────────────────────────────── #
@@ -70,16 +92,18 @@ while True:
     for r in results:
         draw_person_status(frame, r)
 
+        # ── İhlal Kaydı ve Alarm Tetikleme ───────────────── #
+        if not r["safe"]:
+            logged = violation_logger.log_violation(clean_frame, r["person_id"], r["warnings"])
+            if logged and getattr(config, "PLAY_SOUND", True):
+                # Ayrı bir thread ile beklemesiz ses çal
+                threading.Thread(target=play_alert_sound, daemon=True).start()
+
     # ── FPS ─────────────────────────────────────────────── #
     now = time.time()
     fps = 0.9 * fps + 0.1 * (1.0 / max(now - prev_time, 1e-6))
     prev_time = now
     draw_fps(frame, fps)
-
-    # ── Konsol çıktısı (ilk kişi) ───────────────────────── #
-    for r in results:
-        if r["warnings"]:
-            print(f"  Kisi {r['person_id']}: {', '.join(r['warnings'])}")
 
     # ── Göster ──────────────────────────────────────────── #
     cv2.imshow("ISG KKD Algilama", frame)
