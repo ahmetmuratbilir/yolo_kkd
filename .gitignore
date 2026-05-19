@@ -4,3 +4,12 @@ __pycache__/
 .vscode/
 .idea/
 alerts/
+Ultralytics/
+run_output.log
+run_error.log
+dataset_review/
+test_images/
+benchmark_output/
+datasets/auto_ppe/
+runs_auto/
+models/*.pt

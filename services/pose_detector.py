@@ -18,19 +18,25 @@ class PoseDetector:
     """
 
     def __init__(self):
-        self.enabled = MEDIAPIPE_AVAILABLE
+        self.enabled = MEDIAPIPE_AVAILABLE and hasattr(mp, "solutions") and hasattr(mp.solutions, "pose")
         if self.enabled:
             print("[PoseDetector] MediaPipe Pose yukleniyor...")
-            self.mp_pose = mp.solutions.pose
-            self.pose = self.mp_pose.Pose(
-                static_image_mode=False,
-                model_complexity=1,
-                smooth_landmarks=True,
-                min_detection_confidence=0.5,
-                min_tracking_confidence=0.5,
-            )
+            try:
+                self.mp_pose = mp.solutions.pose
+                self.pose = self.mp_pose.Pose(
+                    static_image_mode=False,
+                    model_complexity=1,
+                    smooth_landmarks=True,
+                    min_detection_confidence=0.5,
+                    min_tracking_confidence=0.5,
+                )
+            except Exception as exc:
+                self.enabled = False
+                self.mp_pose = None
+                self.pose = None
+                print(f"[PoseDetector] UYARI: MediaPipe Pose baslatilamadi ({exc}). Fallback aktif.")
         else:
-            print("[PoseDetector] UYARI: 'mediapipe' yuklu degil. Pose takibi pasif (fallback aktif).")
+            print("[PoseDetector] UYARI: MediaPipe Pose kullanilamiyor. Pose takibi pasif (fallback aktif).")
 
     # ------------------------------------------------------------------ #
     def find_wrists(self, frame) -> list[dict]:

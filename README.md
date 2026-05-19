@@ -12,10 +12,25 @@ pip install -r requirements.txt
 
 ---
 
-## Model — `models/ppe_model.pt`
+## Model — çoklu PPE modeli
 
-Bu proje kask/yelek/maske/eldiven görmüş **hazır eğitilmiş** bir YOLO modeli ister.
-Aşağıdakilerden birini `models/` klasörüne koy ve `config.py → MODEL_PATH` güncelle.
+Bu kurulum tek modele güvenmez. `models/ppe_model.pt` kask/yelek/kişi için ana modeldir;
+`vyra_yolo_ppe_best.pt` ve `tanish_yolov8n_ppe_6class.pt` yardımcı model olarak aynı karede
+çalışıp eldiven/gözlük/kask/yelek adaylarını ekler. Çakışan kutular otomatik birleştirilir.
+
+Yardımcı modelleri indirmek için:
+
+```powershell
+.\download_vyra_model.ps1
+.\download_tanish_model.ps1
+```
+
+İlk komut `models/vyra_yolo_ppe_best.pt` dosyasını indirir. Model sınıfları arasında
+`Gloves`, `NO-Gloves`, `Goggles`, `NO-Goggles`, `Hardhat`, `Mask`,
+`Safety Vest` ve `Person` bulunur.
+
+İkinci komut `models/tanish_yolov8n_ppe_6class.pt` dosyasını indirir. Bu model
+`Gloves`, `Vest`, `goggles`, `helmet`, `mask`, `safety_shoe` sınıflarıyla gelir.
 
 ### Seçenek 1 – Roboflow'dan hazır PPE modeli (önerilen)
 
@@ -78,6 +93,61 @@ print(hsv[h, w])  # tıkladığın pikselin değeri
 
 ---
 
+## Yeni dayanıklılık ayarları
+
+- `CLASS_ALIASES`: farklı PPE modellerindeki sınıf adlarını ortak isimlere çevirir.
+- `ENABLE_AUX_PPE_MODELS`: yardımcı modelleri ensemble mantığıyla ana modele ekler.
+- `ENABLE_TRACKING`: kişilere kareler arasında sabit ID verir.
+- `ENABLE_STATUS_SMOOTHING`: tek karelik kaçırmalardan doğan yanlış alarmları azaltır.
+- `REQUIRED_EQUIPMENTS`: hangi ekipmanın gerçekten zorunlu olduğunu belirler.
+- `MIN_EQUIPMENT_OVERLAP` / `MIN_GLOVE_OVERLAP`: ekipman-kişi eşleştirme hassasiyetini ayarlar.
+- `ENABLE_VEST_COLOR_FALLBACK`: model yeleği kaçırırsa torso bölgesinde fosforlu yelek rengi arar.
+
+---
+
+## Test ve kendi veri havuzu
+
+Web/test görselleri indir:
+
+```powershell
+.\download_test_images.ps1
+```
+
+`test_images/` klasöründeki görselleri benchmark et:
+
+```powershell
+.\run_app.bat
+```
+
+veya statik görseller için:
+
+```powershell
+.\run_benchmark.bat
+```
+
+Çıktılar `benchmark_output/annotated/` ve `benchmark_output/results.json` içine yazılır.
+
+Otomatik pseudo-label indeksini yenile:
+
+```powershell
+.\run_auto_index.bat
+```
+
+Çıktılar `datasets/auto_ppe/` içine yazılır. Bu etiketler eğitimden önce gözle kontrol edilmelidir.
+
+Canlı kamerada yanlış/şüpheli örnek gördüğünde `c` tuşuna bas. Sistem ham kareyi ve metadata'yı
+`dataset_review/` içine kaydeder. Otomatik yelek renk fallback'i kullanılan kareler de hard-example
+olarak kaydedilir. Bu görüntüler sonradan LabelImg/Roboflow/CVAT ile etiketlenip YOLO formatına
+aktarılmalıdır.
+
+Etiketli veri hazır olduğunda fine-tune:
+
+```powershell
+.\train_custom_ppe.ps1
+```
+
+---
+
 ## Proje yapısı
 
 ```
@@ -91,5 +161,7 @@ isg-ppe-detection/
     ├── detector.py            ← YOLO çıkarımı
     ├── glove_color_detector.py← HSV renk analizi
     ├── rule_engine.py         ← eşleştirme + uyarı
+    ├── person_tracker.py      ← kareler arası kişi ID takibi
+    ├── status_smoother.py     ← kısa süreli yanlış alarm filtresi
     └── drawing.py             ← OpenCV çizim
 ```
