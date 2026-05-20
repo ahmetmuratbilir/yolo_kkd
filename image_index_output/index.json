@@ -1,0 +1,1790 @@
+[
+  {
+    "image": "01_JAXPORT_Employees_at_Work_on_Talleyrand_Marine_T.jpg",
+    "kisi_sayisi": 3,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.454,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(red1,0.22)",
+        "vest": "color_only_rejected(ratio=0.44)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "ppe_model+color_ok(white,0.45)",
+        "vest": "color_only_rejected(ratio=0.11)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "ppe_model+color_ok(blue,0.21)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "01_pexels_35390341.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.493,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.49)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "02_pexels_9162010.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.623,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.62)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "02_Steady_Steady_Stop_.jpg",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.043,
+    "kask_sac_reddedildi": true,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sac_reddedildi",
+    "fallback_sources": [
+      {
+        "helmet": "hair_rejected(vyra,best_color=white,0.04)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "03_Construction_Zone.jpg",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.083,
+    "kask_sac_reddedildi": true,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": false,
+    "klasor": "kask_sac_reddedildi",
+    "fallback_sources": [
+      {
+        "helmet": "hair_rejected(ppe_model,best_color=white,0.08)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "03_pexels_11790051.jpg",
+    "kisi_sayisi": 3,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.283,
+    "kask_sac_reddedildi": true,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sac_reddedildi",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.28)",
+        "vest": "other_positive",
+        "mask": "ppe_model.pt",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.16)",
+        "vest": "default_missing",
+        "mask": "ppe_model.pt",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "hair_rejected(ppe_model,best_color=red2,0.11)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "04_Death_of_a_K-Mart.jpg",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.285,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "vyra",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "other_positive+color_ok(yellow,0.29)",
+        "vest": "color_only_rejected(ratio=0.83)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "04_pexels_10202856.jpg",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.292,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.29)",
+        "vest": "color_only_rejected(ratio=0.39)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      },
+      {
+        "helmet": "default_missing",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "05_Finishing_up.jpg",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.291,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.29)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "default_missing",
+        "vest": "vyra",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "05_pexels_8961154.jpg",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.532,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.50)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "default_missing",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "06_pexels_34670929.jpg",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.251,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing+color_ok(yellow,0.25)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "ppe_model+color_ok(orange,0.19)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "07_pexels_34670931.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.64,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing+color_ok(white,0.64)",
+        "vest": "color_only_rejected(ratio=0.19)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "08_pexels_28196526.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.227,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": false,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing+color_ok(white,0.23)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "09_pexels_11959727.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.158,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": false,
+    "sag_eldiven": false,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.16)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "10_pexels_36574301.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.417,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.42)",
+        "vest": "color_only_rejected(ratio=0.14)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "11_pexels_8961396.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.159,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.16)",
+        "vest": "color_only_rejected(ratio=0.17)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "12_pexels_4981771.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.974,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.97)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "13_pexels_8487720.jpg",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "blue",
+    "kask_renk_oran": 0.198,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": false,
+    "klasor": "kask_yok",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "14_pexels_8487797.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.439,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.44)",
+        "vest": "other_positive",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "15_pexels_3979016.jpg",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.161,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_yok",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "16_pexels_34670925.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.863,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": false,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.86)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "17_pexels_32467381.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.265,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.27)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "18_pexels_8488021.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.445,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "other_positive+color_ok(white,0.44)",
+        "vest": "color_only_rejected(ratio=0.32)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "19_pexels_8293645.jpg",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.667,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_yok",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "20_pexels_15834397.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.653,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.65)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "21_pexels_9258892.jpg",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.422,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "vyra+color_ok(orange,0.27)",
+        "vest": "color_only_rejected(ratio=0.23)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "default_missing",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "22_pexels_8488020.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.538,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.54)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "23_pexels_35390338.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.238,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.24)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "24_pexels_16440411.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.124,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing+color_ok(white,0.12)",
+        "vest": "vyra",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "25_pexels_8487396.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.861,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing+color_ok(white,0.86)",
+        "vest": "other_positive",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "26_pexels_8486907.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.466,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.47)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "27_pexels_5422490.jpg",
+    "kisi_sayisi": 2,
+    "kask": false,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.006,
+    "kask_sac_reddedildi": true,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sac_reddedildi",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "hair_rejected(ppe_model,best_color=orange,0.01)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "28_pexels_8487761.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.587,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.59)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "29_pexels_14147712.jpg",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.166,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.17)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011254.png",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.02,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_yok",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "color_only_rejected(ratio=0.16)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011316.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "blue",
+    "kask_renk_oran": 0.38,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_mavi",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing+color_ok(blue,0.38)",
+        "vest": "color_only_rejected(ratio=0.10)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011337.png",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.125,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_yok",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011402.png",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.476,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_yok",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011415.png",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.073,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_yok",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "color_only_rejected(ratio=0.14)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011429.png",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.028,
+    "kask_sac_reddedildi": true,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sac_reddedildi",
+    "fallback_sources": [
+      {
+        "helmet": "hair_rejected(default_missing,best_color=white,0.03)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011442.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.328,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": false,
+    "sag_eldiven": false,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing+color_ok(white,0.33)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011500.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.147,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing+color_ok(white,0.15)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011529.png",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "blue",
+    "kask_renk_oran": 0.391,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_yok",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "color_only_rejected(ratio=0.24)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011602.png",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.295,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.30)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "default_missing",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011619.png",
+    "kisi_sayisi": 2,
+    "kask": false,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.135,
+    "kask_sac_reddedildi": true,
+    "yelek": true,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_sac_reddedildi",
+    "fallback_sources": [
+      {
+        "helmet": "hair_rejected(default_missing,best_color=orange,0.08)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "default_missing"
+      },
+      {
+        "helmet": "default_missing",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011648.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.494,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": false,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.49)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011707.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.352,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.35)",
+        "vest": "default_missing",
+        "mask": "vyra_yolo_ppe_best.pt",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011728.png",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.387,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.39)",
+        "vest": "color_only_rejected(ratio=0.18)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "default_missing",
+        "vest": "color_only_rejected(ratio=0.28)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011752.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "blue",
+    "kask_renk_oran": 0.134,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_mavi",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(blue,0.13)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011804.png",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "blue",
+    "kask_renk_oran": 0.675,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_mavi",
+    "fallback_sources": [
+      {
+        "helmet": "default_missing",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "ppe_model+color_ok(blue,0.66)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011846.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.171,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "vyra+color_ok(yellow,0.17)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011915.png",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.632,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.63)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "default_missing+color_ok(yellow,0.13)",
+        "vest": "color_only_rejected(ratio=0.46)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 011933.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.689,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": false,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.69)",
+        "vest": "color_only_rejected(ratio=0.27)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012010.png",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.448,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.39)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "ppe_model+color_ok(white,0.45)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012029.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.272,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.27)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012051.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.197,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_turuncu",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(orange,0.20)",
+        "vest": "color_only_rejected(ratio=0.20)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012133.png",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "blue",
+    "kask_renk_oran": 0.11,
+    "kask_sac_reddedildi": true,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sac_reddedildi",
+    "fallback_sources": [
+      {
+        "helmet": "hair_rejected(ppe_model,best_color=blue,0.11)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012312.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.196,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": false,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.20)",
+        "vest": "color_only_rejected(ratio=0.12)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012348.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.239,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_turuncu",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(orange,0.24)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012404.png",
+    "kisi_sayisi": 1,
+    "kask": false,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.102,
+    "kask_sac_reddedildi": true,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_sac_reddedildi",
+    "fallback_sources": [
+      {
+        "helmet": "hair_rejected(ppe_model,best_color=orange,0.10)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012422.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.257,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.26)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012449.png",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "blue",
+    "kask_renk_oran": 0.367,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_mavi",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.17)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "default_missing",
+        "vest": "color_only_rejected(ratio=0.21)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012508.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.151,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_turuncu",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(orange,0.15)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012529.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.157,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.16)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "tanish",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012546.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.138,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.14)",
+        "vest": "default_missing",
+        "mask": "ppe_model.pt",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012647.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.273,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_turuncu",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(orange,0.27)",
+        "vest": "color_only_rejected(ratio=0.30)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012703.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.226,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.23)",
+        "vest": "default_missing",
+        "mask": "ppe_model.pt",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012908.png",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "orange",
+    "kask_renk_oran": 0.204,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_turuncu",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.16)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "ppe_model+color_ok(orange,0.20)",
+        "vest": "color_only_rejected(ratio=0.14)",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 012953.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.253,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.25)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 013614.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.656,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.66)",
+        "vest": "ppe_model",
+        "mask": "ppe_model.pt",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 013645.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "yellow",
+    "kask_renk_oran": 0.355,
+    "kask_sac_reddedildi": false,
+    "yelek": false,
+    "sol_eldiven": false,
+    "sag_eldiven": true,
+    "klasor": "kask_sari",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(yellow,0.35)",
+        "vest": "color_only_rejected(ratio=0.14)",
+        "mask": "ppe_model.pt",
+        "glasses": "default_missing",
+        "left_glove": "default_missing",
+        "right_glove": "tanish"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 013655.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "red1",
+    "kask_renk_oran": 0.173,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_kirmizi",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(red1,0.17)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 013751.png",
+    "kisi_sayisi": 2,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.765,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": true,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.57)",
+        "vest": "ppe_model",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      },
+      {
+        "helmet": "default_missing",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "hsv_color"
+      }
+    ]
+  },
+  {
+    "image": "Ekran görüntüsü 2026-05-20 015330.png",
+    "kisi_sayisi": 1,
+    "kask": true,
+    "kask_rengi": "white",
+    "kask_renk_oran": 0.37,
+    "kask_sac_reddedildi": false,
+    "yelek": true,
+    "sol_eldiven": true,
+    "sag_eldiven": false,
+    "klasor": "kask_beyaz",
+    "fallback_sources": [
+      {
+        "helmet": "ppe_model+color_ok(white,0.37)",
+        "vest": "default_missing",
+        "mask": "default_missing",
+        "glasses": "default_missing",
+        "left_glove": "hsv_color",
+        "right_glove": "default_missing"
+      }
+    ]
+  }
+]

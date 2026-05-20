@@ -39,6 +39,8 @@ class StatusSmoother:
         self.frame_index = 0
         self.histories = {}
         self.last_seen = {}
+        # Son pozitif tespitlerin kaynağını sakla (fallback_sources tutarlılığı için)
+        self.last_positive_source = {}
 
     # ------------------------------------------------------------------ #
     def update(self, results: list[dict]) -> list[dict]:
@@ -56,29 +58,52 @@ class StatusSmoother:
                 person_id,
                 {key: deque(maxlen=self.max_history) for key in EQUIPMENT_KEYS},
             )
+            # Kişi başı son pozitif kaynağı sakla
+            pos_src = self.last_positive_source.setdefault(person_id, {})
 
             updated = dict(result)
             updated["raw_warnings"] = list(result.get("warnings", []))
             updated["confirmed_missing"] = {}
             updated["pending_missing"] = {}
+            updated["fallback_sources"] = dict(result.get("fallback_sources", {}))
 
             stable_warnings = []
             required = result.get("required", getattr(config, "REQUIRED_EQUIPMENTS", {}))
 
             for equipment in EQUIPMENT_KEYS:
-                detected = bool(result.get(equipment))
-                history[equipment].append(detected)
+                detected_now = bool(result.get(equipment))
+                history[equipment].append(detected_now)
+
+                # Bu frame'de pozitif tespit olduysa kaynağı güncelle
+                src_now = result.get("fallback_sources", {}).get(equipment, "")
+                if detected_now and src_now and "default_missing" not in src_now:
+                    pos_src[equipment] = src_now
 
                 is_required = required.get(equipment, True)
-                confirmed = is_required and self._is_stably_missing(equipment, history[equipment])
-                pending = is_required and not detected and not confirmed
+                stably_missing = is_required and self._is_stably_missing(equipment, history[equipment])
+
+                # Smoothed durum: tarihe göre STABLY_MISSING ise YOK, değilse VAR ANCAK
+                # sadece bu frame veya geçmişte gerçekten görüldüyse VAR
+                recent = list(history[equipment])
+                ever_seen = any(recent)   # geçmişte en az 1 pozitif var mı?
+
+                if stably_missing:
+                    smoothed_val = False
+                elif ever_seen:
+                    smoothed_val = True
+                    # Kaynak: bu frame'de görülduyse doğrudan, yoksa geçmişteki son kaynağı yaz
+                    if not detected_now and equipment in pos_src:
+                        updated["fallback_sources"][equipment] = f"smoothed({pos_src[equipment]})"
+                else:
+                    smoothed_val = False   # Hiç görülmedi, default_missing kalmasın
+
+                updated[equipment] = smoothed_val
+
+                confirmed = is_required and not smoothed_val
+                pending = is_required and not detected_now and not confirmed
 
                 updated["confirmed_missing"][equipment] = confirmed
                 updated["pending_missing"][equipment] = pending
-
-                # Update the equipment status in the result as well to match the smoothed decision
-                if is_required:
-                    updated[equipment] = not confirmed
 
                 if confirmed:
                     stable_warnings.append(WARNING_LABELS[equipment])
@@ -144,3 +169,4 @@ class StatusSmoother:
         for person_id in expired_ids:
             self.histories.pop(person_id, None)
             self.last_seen.pop(person_id, None)
+            self.last_positive_source.pop(person_id, None)

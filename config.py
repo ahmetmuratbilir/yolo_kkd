@@ -2,6 +2,11 @@
 #  config.py  –  ISG KKD Algılama Sistemi Yapılandırması
 # ============================================================
 
+# ── Çalışma Modu ────────────────────────────────────────────
+# "realtime"  = canlı kamera, hafif, yüksek FPS
+# "benchmark" = tüm modeller açık, detaylı analiz
+RUN_MODE = "realtime"
+
 # ── Kamera ──────────────────────────────────────────────────
 CAMERA_SOURCE = 0          # 0 = varsayılan webcam | "rtsp://..." = IP kamera
 CAMERA_BACKENDS = ["DSHOW", "ANY", "MSMF"]  # Windows'ta bozuk/parazitli görüntü için sırayla denenir
@@ -25,16 +30,67 @@ AUX_PPE_MODEL_PATHS = [
 AUX_PPE_MODEL_CONF = 0.15
 DETECTION_MERGE_IOU = 0.65
 
+# ── Kask Renk Doğrulaması (Saçı kask sanmayı önler) ──────────────
+# Model başlık bölgesinde kask görse bile, o bölgede gerçek İSG kaski rengi
+# (sarı, kırmızı, turuncu, beyaz, mavi) yoksa kask kararı reddedilir.
+ENABLE_HELMET_COLOR_VERIFY = True
+HELMET_COLOR_MIN_RATIO = 0.20   # Agresif filtre: kask bölgesinin en az %20'si saf kask rengi olmak zorunda. Saç/cilt yansımalarını eler.
+
+# Sarı kask (en yaygın iş güvenliği rengi)
+LOWER_HELMET_YELLOW = [15,  80,  80]
+UPPER_HELMET_YELLOW = [40, 255, 255]
+
+# Kırmızı kask
+LOWER_HELMET_RED1   = [0,   100, 80]
+UPPER_HELMET_RED1   = [10,  255, 255]
+LOWER_HELMET_RED2   = [165, 100, 80]
+UPPER_HELMET_RED2   = [180, 255, 255]
+
+# Turuncu kask
+LOWER_HELMET_ORANGE = [8,   100, 80]
+UPPER_HELMET_ORANGE = [18,  255, 255]
+
+# Beyaz kask (düşük doygunluk, yüksek parlaklık)
+LOWER_HELMET_WHITE  = [0,   0,   180]
+UPPER_HELMET_WHITE  = [180, 55,  255]
+
+# Mavi kask
+LOWER_HELMET_BLUE   = [95,  80,  80]
+UPPER_HELMET_BLUE   = [135, 255, 255]
+
+HELMET_COLOR_RANGES = [
+    (LOWER_HELMET_YELLOW, UPPER_HELMET_YELLOW),
+    (LOWER_HELMET_RED1,   UPPER_HELMET_RED1),
+    (LOWER_HELMET_RED2,   UPPER_HELMET_RED2),
+    (LOWER_HELMET_ORANGE, UPPER_HELMET_ORANGE),
+    (LOWER_HELMET_WHITE,  UPPER_HELMET_WHITE),
+    (LOWER_HELMET_BLUE,   UPPER_HELMET_BLUE),
+]
+
+# ── Model Aktiflik Kontrolü (RUN_MODE'a göre override edilir) ─
+# Canlı modda FPS'i düşüren modelleri tek tek kapatabilirsiniz.
+ENABLE_VYRA_MODEL  = True   # vyra canlı modda da açık kalsın
+ENABLE_TANISH_MODEL = False  # tanish sadece benchmark modda açılır
+
+# ── Frame-Skip (Yardımcı modeller her karede çalışmasın) ────
+# Ana model (ppe_model) her frame çalışır.
+# Yardımcı modeller kaç frame'de bir çalışsın? (1 = her frame)
+VYRA_FRAME_SKIP   = 3   # vyra 3 frame'de bir
+TANISH_FRAME_SKIP = 5   # tanish 5 frame'de bir (sadece benchmark)
+POSE_EVERY_N_FRAMES = 5  # realtime modda pose kaç frame'de bir çalışsın
+                          # benchmark modda her frame çalışır
+
 # Kapsamlı PPE modeli bazı kamera açılarında kişiyi kaçırırsa,
 # kişi kutusunu COCO tabanlı genel modelden al.
-ENABLE_PERSON_FALLBACK_MODEL = True
+# Realtime modda kapalı (FPS kazanımı için), benchmark modda açık.
+ENABLE_PERSON_FALLBACK_MODEL = False  # RUN_MODE="benchmark" ise True yapın
 PERSON_MODEL_PATH = "yolov8n.pt"
 PERSON_FALLBACK_CONF = 0.25
 
 # ── Güven eşikleri ──────────────────────────────────────────
 PERSON_CONF  = 0.30
 HELMET_CONF  = 0.50
-VEST_CONF    = 0.35
+VEST_CONF    = 0.50  # Yüksek eşik: sadece reflektif/fosforlu yelek kabul edilir
 MASK_CONF    = 0.35
 GLOVE_CONF   = 0.15
 GLASSES_CONF = 0.15
@@ -131,17 +187,32 @@ UPPER_GLOVE_YELLOW = [40, 255, 255]
 LOWER_GLOVE_BLACK = [0,   0,   0]
 UPPER_GLOVE_BLACK = [180, 255, 60]
 
+# Beyaz / gri eldiven (düşük doygunluk, yüksek parlaklık)
+# SADECE bilek/el ROI içinde çalışır, eşik kasıtlı olarak yüksek tutulmuştur.
+LOWER_GLOVE_WHITE = [0,   0,  150]
+UPPER_GLOVE_WHITE = [180, 60, 255]
+WHITE_GLOVE_MIN_RATIO = 0.45   # Bilek bölgesinin %45'i beyaz/gri olmalı
+MIN_WRIST_REGION_AREA = 800    # piksel²; çok küçük bölgede beyaz aramayı atla
+
+# Sarı eldiven için özel oran eşiği (sadece el/bilek ROI'de geçerli)
+YELLOW_GLOVE_MIN_RATIO = 0.30   # bilek bölgesinin %30'u sarıysa eldiven VAR
+
 # Aktif olarak kullanılacak renk aralıkları listesi
 GLOVE_COLOR_RANGES = [
-    (LOWER_GLOVE_BLUE,   UPPER_GLOVE_BLUE),
-    (LOWER_GLOVE_YELLOW, UPPER_GLOVE_YELLOW),
-    (LOWER_GLOVE_BLACK,  UPPER_GLOVE_BLACK),
+    (LOWER_GLOVE_BLUE,   UPPER_GLOVE_BLUE,   GLOVE_COLOR_RATIO),
+    (LOWER_GLOVE_YELLOW, UPPER_GLOVE_YELLOW, YELLOW_GLOVE_MIN_RATIO),  # sarı için özel eşik
+    (LOWER_GLOVE_BLACK,  UPPER_GLOVE_BLACK,  GLOVE_COLOR_RATIO),
+    (LOWER_GLOVE_WHITE,  UPPER_GLOVE_WHITE,  WHITE_GLOVE_MIN_RATIO),  # yüksek eşik
 ]
 
 # ── Yelek renk fallback'i ───────────────────────────────────
 # Model yeleği kaçırırsa torso bölgesinde fosforlu sarı/yeşil/turuncu aranır.
 ENABLE_VEST_COLOR_FALLBACK = True
 VEST_COLOR_RATIO = 0.10
+# Kritik kural: Renk tek başına yelek VAR kararı veremez.
+# Model (ppe_model veya vyra) gövdede vest_pos görmedikçe
+# renk analizi sonucu sadece fallback_sources'a 'color_only_rejected' olarak loglanır.
+VEST_COLOR_REQUIRES_MODEL_CONFIRM = True
 VEST_SAT_MIN = 70
 VEST_VAL_MIN = 80
 VEST_COLOR_RANGES = [
@@ -159,8 +230,8 @@ HARD_EXAMPLE_COOLDOWN = 8.0
 REQUIRED_EQUIPMENTS = {
     "helmet":      True,
     "vest":        True,
-    "mask":        True,
-    "glasses":     True,
+    "mask":        False,   # Maske bu ortamda zorunlu degil
+    "glasses":     False,   # Gozluk modeli yetersiz; benchmark sonrasi eklenecek
     "left_glove":  True,
     "right_glove": True,
 }
@@ -186,7 +257,8 @@ STATUS_CONFIRM_FRAMES_GLOVES_GOGGLES = 2
 STATUS_MISSING_TIMEOUT_FRAMES = 3   # 3 kare peş peşe pozitif yoksa anında YOK (missing) kabul edilir
 
 # ── İskelet Takibi (MediaPipe Pose) ─────────────────────────
-ENABLE_MEDIAPIPE = True     # Eldiven/el bölgesi analizi için MediaPipe aktif eder
+# Realtime modda kapalı (FPS kazanımı). Benchmark modda açılabilir.
+ENABLE_MEDIAPIPE = False    # True = hassas bilek tespiti, False = kişi kutusundan ROI tahmini
 
 # ── Görsel ayarlar ───────────────────────────────────────────
 FONT            = 0   # cv2.FONT_HERSHEY_SIMPLEX

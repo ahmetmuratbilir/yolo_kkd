@@ -45,15 +45,23 @@ def color_ratio(region: np.ndarray, lower: list, upper: list) -> float:
 def glove_detected_by_color(frame, hand_box: list) -> bool:
     """
     El/bilek bölgesini kırpar ve tüm tanımlı eldiven renk aralıklarını dener.
-    Herhangi biri GLOVE_COLOR_RATIO eşiğini geçerse True döner.
+    GLOVE_COLOR_RANGES her eleman (lower, upper, threshold) üçlüsüdür.
+    Beyaz/gri aralığı için ek alan (MIN_WRIST_REGION_AREA) kontrolü yapılır.
     """
     region = crop_region(frame, hand_box)
     if region is None:
         return False
 
-    for lower, upper in config.GLOVE_COLOR_RANGES:
+    region_area = region.shape[0] * region.shape[1]
+
+    for entry in config.GLOVE_COLOR_RANGES:
+        lower, upper, threshold = entry
+        # Beyaz/gri için minimum bölge alanı kontrolü (yanlış pozitif önlemi)
+        if lower == list(config.LOWER_GLOVE_WHITE):
+            if region_area < getattr(config, "MIN_WRIST_REGION_AREA", 800):
+                continue
         ratio = color_ratio(region, lower, upper)
-        if ratio >= config.GLOVE_COLOR_RATIO:
+        if ratio >= threshold:
             return True
     return False
 

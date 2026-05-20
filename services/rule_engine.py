@@ -8,7 +8,8 @@ from services.glove_color_detector import (
     make_hand_boxes_from_person,
     make_wrist_box,
 )
-from services.vest_color_detector import vest_detected_by_color
+from services.vest_color_detector import vest_detected_by_color, vest_color_ratio
+from services.helmet_color_verifier import helmet_color_present
 
 
 WARNING_LABELS = {
@@ -175,9 +176,21 @@ def _resolve_status_helmet_vest(pos_items: list[dict], neg_items: list[dict]) ->
     if not pos_items and not neg_items:
         return False, "default_missing"
     
-    # Check if ppe_model detected positive
-    has_ppe_pos = any("ppe_model" in item.get("model_path", "") for item in pos_items)
-    if has_ppe_pos:
+    # ppe_model her ikisini de görebilir (hem kask hem no-kask).
+    ppe_pos = [item for item in pos_items if "ppe_model" in item.get("model_path", "")]
+    ppe_neg = [item for item in neg_items if "ppe_model" in item.get("model_path", "")]
+    
+    # Eger ppe_model "Kask Yok (no-hardhat)" dendiyse, false-positive kaski ezsin.
+    # Güvenlik önceliklidir: Model şüpheye düşüp "yok" dediyse YOK kabul et.
+    if ppe_neg:
+        # Eğer Kask VAR'ın confidence'ı olağanüstü yüksek değilse (örn. >0.80), YOK kararını dinle
+        max_pos_conf = max((item.get("confidence", 0) for item in ppe_pos), default=0)
+        max_neg_conf = max((item.get("confidence", 0) for item in ppe_neg), default=0)
+        
+        if max_neg_conf >= max_pos_conf * 0.7:  # Negatif güveni, pozitifin %70'ine ulaşıyorsa reddet
+            return False, f"ppe_model_negative({max_neg_conf:.2f})"
+            
+    if ppe_pos:
         return True, "ppe_model"
         
     has_vyra_pos = any("vyra" in item.get("model_path", "") for item in pos_items)
@@ -281,6 +294,19 @@ def assign_equipment_to_persons(
         status["helmet"], status["fallback_sources"]["helmet"] = _resolve_status_helmet_vest(
             helmet_pos_hits.get(idx, []), helmet_neg_hits.get(idx, [])
         )
+
+        # Kask renk doğrulanması: Model "kask var" dese bile,
+        # kafa bölgesinde gerçek İSG kaski rengi yoksa (saç, cilt vs.) reddet.
+        if status["helmet"] and getattr(config, "ENABLE_HELMET_COLOR_VERIFY", True):
+            verified, color_ratio_val, color_name = helmet_color_present(frame, head_regions[idx])
+            if not verified:
+                status["helmet"] = False
+                prev_src = status["fallback_sources"]["helmet"]
+                status["fallback_sources"]["helmet"] = (
+                    f"hair_rejected({prev_src},best_color={color_name},{color_ratio_val:.2f})"
+                )
+            else:
+                status["fallback_sources"]["helmet"] += f"+color_ok({color_name},{color_ratio_val:.2f})"
         
         status["vest"], status["fallback_sources"]["vest"] = _resolve_status_helmet_vest(
             vest_pos_hits.get(idx, []), vest_neg_hits.get(idx, [])
@@ -294,15 +320,23 @@ def assign_equipment_to_persons(
             glasses_pos_hits.get(idx, []), glasses_neg_hits.get(idx, [])
         )
 
-        # Vest renk kontrolü (sadece eksikse çalışır, _resolve_status'u ezer)
-        if (
-            getattr(config, "ENABLE_VEST_COLOR_FALLBACK", True)
-            and _is_required("vest")
-            and not status["vest"]
-            and vest_detected_by_color(frame, torso_regions[idx])
-        ):
-            status["vest"] = True
-            status["fallback_sources"]["vest"] = "color_fallback"
+        # Vest renk kontrolü – Önemli kural:
+        # VEST_COLOR_REQUIRES_MODEL_CONFIRM = True ise renk tek başına yelek VAR yapmaz.
+        # Sadece model daha önce vest_pos görmediyse ve renk de yoksa reddedilir.
+        if getattr(config, "ENABLE_VEST_COLOR_FALLBACK", True) and _is_required("vest"):
+            color_r = vest_color_ratio(frame, torso_regions[idx])
+            vest_threshold = getattr(config, "VEST_COLOR_RATIO", 0.10)
+            color_detected = color_r >= vest_threshold
+            requires_model = getattr(config, "VEST_COLOR_REQUIRES_MODEL_CONFIRM", True)
+
+            if color_detected and not status["vest"]:
+                if requires_model:
+                    # Renk var ama model görmedı → reddedildi, logla
+                    status["fallback_sources"]["vest"] = f"color_only_rejected(ratio={color_r:.2f})"
+                else:
+                    # Eski davranış: renk yeterli → VAR
+                    status["vest"] = True
+                    status["fallback_sources"]["vest"] = f"color_fallback(ratio={color_r:.2f})"
 
         # Eldiven kararları (Renk analizi HSV de dahil edilir)
         use_color_fallback = getattr(config, "ENABLE_GLOVE_COLOR_FALLBACK", False)
