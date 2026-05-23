@@ -42,5 +42,11 @@ runs/detect/custom_ppe_gpu/**
 runs/detect/custom_ppe_gpu/weights/*
 !runs/detect/custom_ppe_gpu/weights/best.pt
 
+!runs/detect/custom_ppe_v3/
+runs/detect/custom_ppe_v3/**
+!runs/detect/custom_ppe_v3/weights/
+runs/detect/custom_ppe_v3/weights/*
+!runs/detect/custom_ppe_v3/weights/best.pt
+
 # Venv
 .venv/

@@ -17,9 +17,9 @@ CAMERA_FOURCC = ""         # bazı kameralar MJPG isteyince siyah/parazitli gör
 CAMERA_REOPEN_AFTER_FAILURES = 20
 
 # ── Model yolu ──────────────────────────────────────────────
-# Ana model: testlerde kask/yelek ve kisi kutusunda en guclu sonuc veren yerel PPE modeli.
-MODEL_PATH = "models/ppe_model.pt"
-FALLBACK_MODEL_PATH = "models/ppe_model.pt"
+# Ana model: V3 egitilmis model (62K resim, gozluk mAP50: 0.871)
+MODEL_PATH = "runs/detect/custom_ppe_v3/weights/best.pt"
+FALLBACK_MODEL_PATH = "runs/detect/custom_ppe_gpu/weights/best.pt"
 
 # Yardimci PPE modelleri: ana modelin kacirdigi eldiven/gozluk/yelek/kask adaylarini ekler.
 ENABLE_AUX_PPE_MODELS = True
@@ -89,11 +89,12 @@ PERSON_FALLBACK_CONF = 0.25
 
 # ── Güven eşikleri ──────────────────────────────────────────
 PERSON_CONF  = 0.30
-HELMET_CONF  = 0.50
-VEST_CONF    = 0.50  # Yüksek eşik: sadece reflektif/fosforlu yelek kabul edilir
+HELMET_CONF  = 0.45
+VEST_CONF    = 0.45
 MASK_CONF    = 0.35
-GLOVE_CONF   = 0.15
-GLASSES_CONF = 0.15
+GLOVE_CONF   = 0.35   # Eldiven esigi artirildi (hayali eldiven onlemek icin)
+GLASSES_CONF = 0.40   # V3 ile gozluk cok iyilesti, guvenilir esik
+SMOKING_CONF = 0.40   # Sigara tespit esigi
 
 # ── Model sınıf adı eşleştirmeleri ──────────────────────────
 # Farklı PPE modelleri aynı nesneleri farklı isimlerle döndürebilir.
@@ -124,13 +125,20 @@ CLASS_MAP = {
 
     "glove": "glove_pos",
     "gloves": "glove_pos",
+    "gloves_pos": "glove_pos",   # egitilmis modelin ciktisi
+    "gloves_neg": "glove_neg",   # egitilmis modelin ciktisi
+    "glove_pos": "glove_pos",
+    "glove_neg": "glove_neg",
     "safety glove": "glove_pos",
     "safety gloves": "glove_pos",
     "no-glove": "glove_neg",
     "no-gloves": "glove_neg",
+    "no glove": "glove_neg",
 
     "goggles": "goggles_pos",
     "goggle": "goggles_pos",
+    "goggles_pos": "goggles_pos",  # egitilmis modelin ciktisi
+    "goggles_neg": "goggles_neg",  # egitilmis modelin ciktisi
     "safety glasses": "goggles_pos",
     "safety-glasses": "goggles_pos",
     "safety goggles": "goggles_pos",
@@ -140,6 +148,10 @@ CLASS_MAP = {
     "glasses": "goggles_pos",
     "no-goggles": "goggles_neg",
     "no_glasses": "goggles_neg",
+    "eyes with goggles": "goggles_pos",
+    "eyes without goggles": "goggles_neg",
+
+    "smoking": "smoking",         # sigara icme tespiti
     
     "mask": "mask_pos",
     "face mask": "mask_pos",
@@ -231,7 +243,7 @@ REQUIRED_EQUIPMENTS = {
     "helmet":      True,
     "vest":        True,
     "mask":        False,   # Maske bu ortamda zorunlu degil
-    "glasses":     False,   # Gozluk modeli yetersiz; benchmark sonrasi eklenecek
+    "glasses":     True,    # V3 ile gozluk tespiti iyilesti (mAP50: 0.871), aktif
     "left_glove":  True,
     "right_glove": True,
 }

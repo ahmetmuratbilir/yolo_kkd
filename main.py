@@ -5,6 +5,7 @@ import sys
 import time
 import os
 import cv2
+import numpy as np
 import threading
 
 import config
@@ -34,11 +35,11 @@ if RUN_MODE == "benchmark":
     config.POSE_EVERY_N_FRAMES = 1   # benchmark: her frame pose
     print("[main] Benchmark modu: Tüm modeller ve MediaPipe ACIK")
 else:  # realtime
-    config.ENABLE_PERSON_FALLBACK_MODEL = False
+    config.ENABLE_PERSON_FALLBACK_MODEL = True   # Kisi takibini sabitlemek icin acildi (titremeyi onler)
     config.ENABLE_MEDIAPIPE = True   # Eldiven tespiti için iskelet takibi ŞART, geri açıldı.
     config.ENABLE_TANISH_MODEL = False
     config.ENABLE_VYRA_MODEL = False # Vyra kapalı (çok fazla false-positive kask üretiyor)
-    print("[main] Realtime modu: Ana Model (ppe_model.pt) + MediaPipe (Eldiven için) çalışacak")
+    print("[main] Realtime modu: Ana Model + Person Fallback (yolov8n) + MediaPipe çalışacak")
 
 model_path = config.MODEL_PATH
 if not os.path.exists(model_path) and getattr(config, "FALLBACK_MODEL_PATH", None):
@@ -127,6 +128,36 @@ if cap is None or not cap.isOpened():
     sys.exit(1)
 
 
+# ── Pencere oluştur (tam ekran) ──────────────────────────── #
+WIN_NAME = "ISG KKD Algilama | NUKLEER REAKTOR GUVENLIK SISTEMI"
+cv2.namedWindow(WIN_NAME, cv2.WINDOW_NORMAL)
+cv2.setWindowProperty(WIN_NAME, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+_fullscreen = True
+
+# Ekran çözünürlüğünü al (Windows)
+try:
+    import ctypes
+    user32 = ctypes.windll.user32
+    SCREEN_W = user32.GetSystemMetrics(0)
+    SCREEN_H = user32.GetSystemMetrics(1)
+except Exception:
+    SCREEN_W, SCREEN_H = 1920, 1080
+print(f"[main] Ekran: {SCREEN_W}x{SCREEN_H}")
+
+
+def _letterbox(img, target_w: int, target_h: int):
+    """Görüntüyü orantılı büyütür, siyah boşluk ekler."""
+    h, w = img.shape[:2]
+    scale = min(target_w / w, target_h / h)
+    new_w, new_h = int(w * scale), int(h * scale)
+    resized = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_LINEAR)
+    canvas = np.zeros((target_h, target_w, 3), dtype=np.uint8)
+    x_off = (target_w - new_w) // 2
+    y_off = (target_h - new_h) // 2
+    canvas[y_off:y_off + new_h, x_off:x_off + new_w] = resized
+    return canvas
+
+
 # ── FPS sayacı ───────────────────────────────────────────── #
 prev_time = time.time()
 fps = 0.0
@@ -210,8 +241,10 @@ while True:
     glasses_neg = [d for d in dets if d["class_name"] == "goggles_neg"]
     gloves_pos  = [d for d in dets if d["class_name"] == "glove_pos"]
     gloves_neg  = [d for d in dets if d["class_name"] == "glove_neg"]
+    smokings    = [d for d in dets if d["class_name"] == "smoking"
+                   and d["confidence"] >= getattr(config, "SMOKING_CONF", 0.40)]
 
-    # ── Kural motoru ────────────────────────────────────── #
+    # ── Kural motoru ────────────────────────────────────────── #
     results = assign_equipment_to_persons(
         frame, persons, 
         helmets_pos, helmets_neg, 
@@ -219,12 +252,14 @@ while True:
         masks_pos, masks_neg, 
         gloves_pos, gloves_neg, 
         glasses_pos=glasses_pos, glasses_neg=glasses_neg, 
-        wrists=wrists
+        wrists=wrists,
+        smokings=smokings,
     )
     results = status_smoother.update(results)
 
     # ── Çizim ───────────────────────────────────────────── #
-    unsafe_count = sum(1 for r in results if not r["safe"])
+    unsafe_count  = sum(1 for r in results if not r["safe"])
+    smoking_count = sum(1 for r in results if r.get("smoking"))
     debug_text = ""
     if getattr(config, "SHOW_DEBUG_COUNTS", False):
         debug_text = (
@@ -233,7 +268,7 @@ while True:
             f"P: {len(persons)} | Kask:{len(helmets_pos)} Yelek:{len(vests_pos)} "
             f"Maske:{len(masks_pos)} Gozluk:{len(glasses_pos)} Eldiven:{len(gloves_pos)}"
         )
-    draw_header(frame, len(results), unsafe_count, debug_text=debug_text)
+    draw_header(frame, len(results), unsafe_count, smoking_count=smoking_count, debug_text=debug_text)
 
     for r in results:
         draw_person_status(frame, r)
@@ -258,13 +293,18 @@ while True:
     prev_time = now
     draw_fps(frame, fps)
 
-    # ── Göster ──────────────────────────────────────────── #
-    cv2.imshow("ISG KKD Algilama", frame)
+    # ── Göster (orantılı tam ekran) ─────────────────────────── #
+    display = _letterbox(frame, SCREEN_W, SCREEN_H) if _fullscreen else frame
+    cv2.imshow(WIN_NAME, display)
 
     key = cv2.waitKey(1) & 0xFF
     if key == ord("c"):
         dataset_collector.save_manual(clean_frame, results, dets, reason="manual_capture")
-    if key == ord("q"):
+    if key == ord("f") or key == ord("F"):
+        _fullscreen = not _fullscreen
+        prop = cv2.WINDOW_FULLSCREEN if _fullscreen else cv2.WINDOW_NORMAL
+        cv2.setWindowProperty(WIN_NAME, cv2.WND_PROP_FULLSCREEN, prop)
+    if key == ord("q") or key == 27:  # q veya ESC ile cik
         break
 
 cap.release()

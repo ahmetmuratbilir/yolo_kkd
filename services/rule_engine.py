@@ -13,12 +13,13 @@ from services.helmet_color_verifier import helmet_color_present
 
 
 WARNING_LABELS = {
-    "helmet": "Kask eksik",
-    "vest": "Yelek eksik",
-    "mask": "Maske eksik",
-    "glasses": "Gozluk eksik",
-    "left_glove": "Sol eldiven eksik",
+    "helmet":      "Kask eksik",
+    "vest":        "Yelek eksik",
+    "mask":        "Maske eksik",
+    "glasses":     "Gozluk eksik",
+    "left_glove":  "Sol eldiven eksik",
     "right_glove": "Sag eldiven eksik",
+    "smoking":     "!!! SIGARA ICIYOR !!!",
 }
 
 
@@ -63,6 +64,8 @@ def _sub_region(person_box: list, top_ratio: float, bottom_ratio: float) -> list
 
 
 def _region_match_score(item_box: list, region_box: list, min_overlap: float) -> float:
+    if not region_box or region_box == [0, 0, 0, 0]:
+        return 0.0
     overlap = _overlap_ratio(item_box, region_box)
     if _inside(_center(item_box), region_box):
         return 1.0 + overlap
@@ -96,6 +99,7 @@ def empty_status() -> dict:
         "glasses": False,
         "left_glove": False,
         "right_glove": False,
+        "smoking": False,
         "warnings": [],
         "safe": False,
         "required": _required_map(),
@@ -126,10 +130,17 @@ def _assign_items_to_regions(items: list[dict], regions: list[list], min_overlap
 
 
 def _hand_boxes_for_person(person_box: list, wrists: Optional[list[dict]]) -> tuple[list, list]:
-    left_box, right_box = make_hand_boxes_from_person(person_box)
-
-    if not wrists:
-        return left_box, right_box
+    use_mediapipe = getattr(config, "ENABLE_MEDIAPIPE", False)
+    
+    if use_mediapipe:
+        left_box = [0, 0, 0, 0]
+        right_box = [0, 0, 0, 0]
+        if not wrists:
+            return left_box, right_box
+    else:
+        left_box, right_box = make_hand_boxes_from_person(person_box)
+        if not wrists:
+            return left_box, right_box
 
     wrist_box_size = max(24, int((person_box[3] - person_box[1]) * 0.08))
     for wrist in wrists:
@@ -252,10 +263,12 @@ def assign_equipment_to_persons(
     gloves_pos: list[dict], gloves_neg: list[dict],
     glasses_pos: list[dict] = None, glasses_neg: list[dict] = None,
     wrists: list[dict] = None,
+    smokings: list[dict] = None,
 ) -> list[dict]:
     """Her kişi için KKD durumunu belirler."""
     glasses_pos = glasses_pos or []
     glasses_neg = glasses_neg or []
+    smokings    = smokings or []
     min_overlap = getattr(config, "MIN_EQUIPMENT_OVERLAP", 0.08)
 
     head_regions = [_sub_region(p["box"], 0.0, config.HEAD_REGION_RATIO) for p in persons]
@@ -274,6 +287,9 @@ def assign_equipment_to_persons(
     
     glasses_pos_hits = _assign_items_to_regions(glasses_pos, eye_regions, min_overlap)
     glasses_neg_hits = _assign_items_to_regions(glasses_neg, eye_regions, min_overlap)
+
+    # Sigara: kisi kutusunun tamami ile eslestirilir
+    smoking_hits = _assign_items_to_regions(smokings, [p["box"] for p in persons], 0.05)
 
     hand_boxes = [_hand_boxes_for_person(p["box"], wrists) for p in persons]
     hand_targets = []
@@ -363,6 +379,10 @@ def assign_equipment_to_persons(
             right_hsv
         )
 
+        # Sigara tespiti
+        if smoking_hits.get(idx):
+            status["smoking"] = True
+
         status["warnings"] = build_warnings(status)
         status["safe"] = len(status["warnings"]) == 0
 
@@ -387,6 +407,9 @@ def assign_equipment_to_persons(
 def build_warnings(status: dict) -> list[str]:
     msgs = []
     for equipment, label in WARNING_LABELS.items():
-        if _is_required(equipment) and not status.get(equipment):
+        if equipment == "smoking":
+            if status.get("smoking"):
+                msgs.append(label)
+        elif _is_required(equipment) and not status.get(equipment):
             msgs.append(label)
     return msgs
