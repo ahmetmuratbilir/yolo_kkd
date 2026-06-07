@@ -50,3 +50,8 @@ runs/detect/custom_ppe_v3/weights/*
 
 # Venv
 .venv/
+# Kaggle
+*.bin
+kaggle_upload/
+kaggle_kernel_output/
+temp_*/

@@ -220,11 +220,11 @@ GLOVE_COLOR_RANGES = [
 # ── Yelek renk fallback'i ───────────────────────────────────
 # Model yeleği kaçırırsa torso bölgesinde fosforlu sarı/yeşil/turuncu aranır.
 ENABLE_VEST_COLOR_FALLBACK = True
-VEST_COLOR_RATIO = 0.10
+VEST_COLOR_RATIO = 0.08
 # Kritik kural: Renk tek başına yelek VAR kararı veremez.
 # Model (ppe_model veya vyra) gövdede vest_pos görmedikçe
 # renk analizi sonucu sadece fallback_sources'a 'color_only_rejected' olarak loglanır.
-VEST_COLOR_REQUIRES_MODEL_CONFIRM = True
+VEST_COLOR_REQUIRES_MODEL_CONFIRM = False
 VEST_SAT_MIN = 70
 VEST_VAL_MIN = 80
 VEST_COLOR_RANGES = [
@@ -262,11 +262,11 @@ TRACK_MAX_DISTANCE   = 140   # piksel; kameraya göre artırılıp azaltılabili
 
 # ── Alarm doğrulama / kısa süreli hata filtresi ─────────────
 ENABLE_STATUS_SMOOTHING = True
-STATUS_HISTORY_SIZE_HELMET_VEST = 5
-STATUS_CONFIRM_FRAMES_HELMET_VEST = 2
-STATUS_HISTORY_SIZE_GLOVES_GOGGLES = 7
-STATUS_CONFIRM_FRAMES_GLOVES_GOGGLES = 2
-STATUS_MISSING_TIMEOUT_FRAMES = 3   # 3 kare peş peşe pozitif yoksa anında YOK (missing) kabul edilir
+STATUS_HISTORY_SIZE_HELMET_VEST = 7
+STATUS_CONFIRM_FRAMES_HELMET_VEST = 4
+STATUS_HISTORY_SIZE_GLOVES_GOGGLES = 8
+STATUS_CONFIRM_FRAMES_GLOVES_GOGGLES = 5
+STATUS_MISSING_TIMEOUT_FRAMES = 5   # 5 kare peş peşe pozitif yoksa anında YOK (missing) kabul edilir
 
 # ── İskelet Takibi (MediaPipe Pose) ─────────────────────────
 # Realtime modda kapalı (FPS kazanımı). Benchmark modda açılabilir.

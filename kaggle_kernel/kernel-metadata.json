@@ -1,0 +1,15 @@
+{
+  "id": "muratbilir/ppe-yolov8m-100epochs",
+  "title": "PPE YOLOv8m 100Epochs",
+  "code_file": "train.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "muratbilir/combined-ppe"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}
