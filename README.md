@@ -1,167 +1,92 @@
-# ISG KKD Algılama Sistemi
+# 🦺 PPE Detection with YOLOv11m
 
-Gerçek zamanlı kask · yelek · maske · eldiven tespiti.
+Nükleer reaktör sahalarında **Kişisel Koruyucu Donanım (KKD)** tespiti için eğitilmiş YOLOv11m modeli.
 
----
+## 📊 Model Performansı
 
-## Kurulum
+| Metrik | Sonuç |
+|--------|-------|
+| **mAP50** | %68.1 |
+| **mAP50-95** | %40.9 |
+| **Precision** | %72.1 |
+| **Recall** | %64.0 |
 
-```bash
-pip install -r requirements.txt
-```
+### Sınıf Bazında Başarı (mAP50)
 
----
+| Sınıf | Başarı |
+|-------|--------|
+| 🧍 Person | %84.0 |
+| ⛑️ Baret (Takıyor) | %80.3 |
+| ❌ Baret (Takmıyor) | %79.3 |
+| 🦺 Yelek (Takıyor) | %74.9 |
+| ❌ Yelek (Takmıyor) | %80.6 |
+| 🥽 Gözlük (Takıyor) | %84.3 |
+| 🤚 Eldiven (Takıyor) | %53.1 |
+| 🚬 Sigara | %74.3 |
 
-## Model — çoklu PPE modeli
+## 🏗️ Proje Hakkında
 
-Bu kurulum tek modele güvenmez. `models/ppe_model.pt` kask/yelek/kişi için ana modeldir;
-`vyra_yolo_ppe_best.pt` ve `tanish_yolov8n_ppe_6class.pt` yardımcı model olarak aynı karede
-çalışıp eldiven/gözlük/kask/yelek adaylarını ekler. Çakışan kutular otomatik birleştirilir.
+Bu proje, nükleer reaktör sahalarında çalışan personelin KKD uyumluluğunu otomatik olarak denetlemek amacıyla geliştirilmiştir.
 
-Yardımcı modelleri indirmek için:
+### Tespit Edilen Sınıflar (10 sınıf)
+- `person` - Kişi
+- `helmet_pos` - Baret takıyor ✅
+- `helmet_neg` - Baret takmıyor ❌
+- `vest_pos` - Yelek takıyor ✅
+- `vest_neg` - Yelek takmıyor ❌
+- `gloves_pos` - Eldiven takıyor ✅
+- `gloves_neg` - Eldiven takmıyor ❌
+- `goggles_pos` - Gözlük takıyor ✅
+- `goggles_neg` - Gözlük takmıyor ❌
+- `smoking` - Sigara içiyor 🚬
 
-```powershell
-.\download_vyra_model.ps1
-.\download_tanish_model.ps1
-```
+## 🤖 Eğitim Detayları
 
-İlk komut `models/vyra_yolo_ppe_best.pt` dosyasını indirir. Model sınıfları arasında
-`Gloves`, `NO-Gloves`, `Goggles`, `NO-Goggles`, `Hardhat`, `Mask`,
-`Safety Vest` ve `Person` bulunur.
+| Parametre | Değer |
+|-----------|-------|
+| Model | YOLOv11m |
+| Epochs | 100 |
+| Image Size | 640x640 |
+| Batch Size | 16 |
+| Platform | Kaggle (GPU T4 x2) |
+| Eğitim Süresi | ~12 saat |
+| Veri Seti | Combined PPE Dataset V2 (~100K görsel) |
 
-İkinci komut `models/tanish_yolov8n_ppe_6class.pt` dosyasını indirir. Bu model
-`Gloves`, `Vest`, `goggles`, `helmet`, `mask`, `safety_shoe` sınıflarıyla gelir.
+## 📥 Model İndirme
 
-### Seçenek 1 – Roboflow'dan hazır PPE modeli (önerilen)
+Eğitilmiş model ağırlıklarını Kaggle'dan indirebilirsiniz:
 
-Roboflow Universe'de ücretsiz PPE modelleri var:
-https://universe.roboflow.com/
+👉 **[PPE YOLOv8m Best Model Weights - Kaggle](https://www.kaggle.com/datasets/muratbilir/ppe-yolov8m-best-weights)**
 
-Arama: `PPE detection` → "Download Model" → Format: **YOLOv8 PyTorch** → `.pt` dosyasını al.
+## 🚀 Kullanım
 
-Popüler hazır modeller:
-| Model | Sınıflar | Link |
-|---|---|---|
-| keremberke/hard-hat-detection | helmet, person | roboflow.com |
-| SomaDhan/ppe-detection-3aasr | helmet, vest, mask, glove | roboflow.com |
-| Nerdio/PPE-Detection | helmet, vest, mask | roboflow.com |
-
-Roboflow Python ile indirme:
 ```python
-from roboflow import Roboflow
-rf = Roboflow(api_key="SENIN_API_KEY")
-project = rf.workspace("...").project("ppe-detection-...")
-model = project.version(1).download("yolov8")
+from ultralytics import YOLO
+
+# Modeli yükle
+model = YOLO('best.pt')
+
+# Görüntü üzerinde tahmin yap
+results = model('foto.jpg')
+results[0].show()
+
+# Kamera ile canlı test
+results = model(source=0, show=True)  # 0 = webcam
 ```
 
-### Seçenek 2 – GitHub hazır ağırlıklar
-
-- https://github.com/niconielsen32/PPE-Detection
-- https://github.com/ultralytics/assets (genel COCO; kask yok ama kişi tespiti için)
-
-### Seçenek 3 – Kendi modelini eğit
-
-Roboflow veya LabelImg ile kendi veri setini hazırla.
-```bash
-yolo train model=yolov8n.pt data=ppe.yaml epochs=50 imgsz=640
-```
-
----
-
-## Çalıştırma
-
-```bash
-python main.py
-```
-
-- `q` tuşu → çıkış
-- IP kamera için `config.py` içinde `CAMERA_SOURCE = "rtsp://..."` yap
-
----
-
-## Eldiven rengi ayarı
-
-`config.py` içinde `GLOVE_COLOR_RANGES` listesine kendi eldiveninin HSV aralığını ekle.
-
-HSV renk bulma aracı:
-```python
-import cv2, numpy as np
-img = cv2.imread("eldiven_foto.jpg")
-hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-print(hsv[h, w])  # tıkladığın pikselin değeri
-```
-
----
-
-## Yeni dayanıklılık ayarları
-
-- `CLASS_ALIASES`: farklı PPE modellerindeki sınıf adlarını ortak isimlere çevirir.
-- `ENABLE_AUX_PPE_MODELS`: yardımcı modelleri ensemble mantığıyla ana modele ekler.
-- `ENABLE_TRACKING`: kişilere kareler arasında sabit ID verir.
-- `ENABLE_STATUS_SMOOTHING`: tek karelik kaçırmalardan doğan yanlış alarmları azaltır.
-- `REQUIRED_EQUIPMENTS`: hangi ekipmanın gerçekten zorunlu olduğunu belirler.
-- `MIN_EQUIPMENT_OVERLAP` / `MIN_GLOVE_OVERLAP`: ekipman-kişi eşleştirme hassasiyetini ayarlar.
-- `ENABLE_VEST_COLOR_FALLBACK`: model yeleği kaçırırsa torso bölgesinde fosforlu yelek rengi arar.
-
----
-
-## Test ve kendi veri havuzu
-
-Web/test görselleri indir:
-
-```powershell
-.\download_test_images.ps1
-```
-
-`test_images/` klasöründeki görselleri benchmark et:
-
-```powershell
-.\run_app.bat
-```
-
-veya statik görseller için:
-
-```powershell
-.\run_benchmark.bat
-```
-
-Çıktılar `benchmark_output/annotated/` ve `benchmark_output/results.json` içine yazılır.
-
-Otomatik pseudo-label indeksini yenile:
-
-```powershell
-.\run_auto_index.bat
-```
-
-Çıktılar `datasets/auto_ppe/` içine yazılır. Bu etiketler eğitimden önce gözle kontrol edilmelidir.
-
-Canlı kamerada yanlış/şüpheli örnek gördüğünde `c` tuşuna bas. Sistem ham kareyi ve metadata'yı
-`dataset_review/` içine kaydeder. Otomatik yelek renk fallback'i kullanılan kareler de hard-example
-olarak kaydedilir. Bu görüntüler sonradan LabelImg/Roboflow/CVAT ile etiketlenip YOLO formatına
-aktarılmalıdır.
-
-Etiketli veri hazır olduğunda fine-tune:
-
-```powershell
-.\train_custom_ppe.ps1
-```
-
----
-
-## Proje yapısı
+## 📁 Proje Yapısı
 
 ```
-isg-ppe-detection/
-├── main.py
-├── config.py
-├── requirements.txt
-├── models/
-│   └── ppe_model.pt          ← buraya koy
-└── services/
-    ├── detector.py            ← YOLO çıkarımı
-    ├── glove_color_detector.py← HSV renk analizi
-    ├── rule_engine.py         ← eşleştirme + uyarı
-    ├── person_tracker.py      ← kareler arası kişi ID takibi
-    ├── status_smoother.py     ← kısa süreli yanlış alarm filtresi
-    └── drawing.py             ← OpenCV çizim
+yolo_egitim/
+├── kaggle_kernel/
+│   └── kernel.ipynb        # Kaggle eğitim notebook'u
+├── datasets/
+│   └── combined_ppe/       # Veri seti (train/valid/test)
+├── data.yaml               # Veri seti konfigürasyonu
+├── best.pt                 # En iyi model ağırlıkları (Kaggle'dan indir)
+└── README.md
 ```
+
+## 📄 Lisans
+
+Bu proje MIT lisansı ile lisanslanmıştır.

@@ -1,0 +1,17 @@
+path: C:/Users/ahmet murat bilir/Desktop/nukleerraktoruygulaması/yolo_egitim/datasets/combined_ppe
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 10
+names:
+  0: person
+  1: helmet_pos
+  2: helmet_neg
+  3: vest_pos
+  4: vest_neg
+  5: gloves_pos
+  6: gloves_neg
+  7: goggles_pos
+  8: goggles_neg
+  9: smoking

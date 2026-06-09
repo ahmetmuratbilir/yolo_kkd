@@ -1,57 +1,39 @@
 # Python
 __pycache__/
 *.py[cod]
-*$py.class
+*.pyo
+.venv/
+*.egg-info/
+
+# Model dosyaları (büyük, Kaggle'da saklıyoruz)
+*.pt
+*.pth
+*.onnx
+*.engine
+
+# Veri seti (çok büyük)
+datasets/
+temp_*/
+raw_downloads/
+
+# Çıktılar
+runs/
+*.zip
+*.tar.gz
+
+# Kaggle
+kaggle_kernel_output/
+kaggle_upload/
+model_upload/
 
 # IDE
 .vscode/
 .idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Logs
-alerts/
-run_output.log
-run_error.log
 *.log
-*.pid
-
-# Ultralytics cache
-Ultralytics/
-
-# Dataset review / test
-dataset_review/
-test_images/
-benchmark_output/
-image_index_output/
-
-# Datasets (çok büyük)
-datasets/
-*.zip
-
-# Pretrained base models (indirilebilir)
-models/*.pt
-yolov8n.pt
-yolov8s.pt
-yolo12n.pt
-yolo26n.pt
-
-# runs klasörü - sadece eğitilmiş modeli tut
-runs/detect/*/
-!runs/detect/custom_ppe_gpu/
-runs/detect/custom_ppe_gpu/**
-!runs/detect/custom_ppe_gpu/weights/
-runs/detect/custom_ppe_gpu/weights/*
-!runs/detect/custom_ppe_gpu/weights/best.pt
-
-!runs/detect/custom_ppe_v3/
-runs/detect/custom_ppe_v3/**
-!runs/detect/custom_ppe_v3/weights/
-runs/detect/custom_ppe_v3/weights/*
-!runs/detect/custom_ppe_v3/weights/best.pt
-
-# Venv
-.venv/
-# Kaggle
-*.bin
-kaggle_upload/
-kaggle_kernel_output/
-temp_*/
