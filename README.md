@@ -6,9 +6,9 @@ Nükleer reaktör sahalarında **Kişisel Koruyucu Donanım (KKD)** tespiti içi
 
 | Metrik | Sonuç |
 |--------|-------|
-| **mAP50** | **%94.2** |
-| **mAP50-95** | **%72.8** |
-| **Model** | **YOLOv11m** (Sürüm 4) |
+| **mAP50** | **%67.0** |
+| **mAP50-95** | **%40.1** |
+| **Model** | **YOLOv11m** (Sürüm 4 - Epoch 11) |
 
 Eski v3 modelindeki zincirleme fine-tune ezberleme sorunu (overfitting), bu sürümde sıfır yolo11m tabanından başlanarak ve veri setleri birleştirilerek (ortak eğitim yöntemi ile) tamamen çözülmüştür. Sınıflar genelinde dengeli ve yüksek bir genelleme başarısı elde edilmiştir.
 
