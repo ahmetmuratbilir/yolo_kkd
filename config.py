@@ -18,8 +18,8 @@ CAMERA_REOPEN_AFTER_FAILURES = 20
 
 # ── Model yolu ──────────────────────────────────────────────
 # Ana model: V3 egitilmis model (62K resim, gozluk mAP50: 0.871)
-MODEL_PATH = "runs/detect/custom_ppe_v3/weights/best.pt"
-FALLBACK_MODEL_PATH = "runs/detect/custom_ppe_gpu/weights/best.pt"
+MODEL_PATH = "models/best.pt"
+FALLBACK_MODEL_PATH = "runs/detect/custom_ppe_v3/weights/best.pt"
 
 # Yardimci PPE modelleri: ana modelin kacirdigi eldiven/gozluk/yelek/kask adaylarini ekler.
 ENABLE_AUX_PPE_MODELS = True

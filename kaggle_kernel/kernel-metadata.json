@@ -1,14 +1,15 @@
 {
-  "id": "muratbilir/ppe-yolov8m-100epochs",
-  "title": "PPE YOLOv8m 100Epochs",
-  "code_file": "train.py",
+  "id": "muratbilir/custom-ppe-v4-training",
+  "title": "Custom PPE V4 Training",
+  "code_file": "train_v4.py",
   "language": "python",
   "kernel_type": "script",
   "is_private": true,
   "enable_gpu": true,
   "enable_internet": true,
   "dataset_sources": [
-    "muratbilir/combined-ppe"
+    "muratbilir/combined-ppe-v2",
+    "muratbilir/gloves-ppe-zips-cleaned"
   ],
   "competition_sources": [],
   "kernel_sources": []
