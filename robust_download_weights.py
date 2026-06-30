@@ -178,6 +178,38 @@ def main():
                     shutil.copyfileobj(source, target)
                 print(f"[SUCCESS] Saved results plot to: {extracted_results_path}")
                 
+            # Find results.csv path dynamically
+            csv_path_in_zip = None
+            for f in all_files:
+                if f.endswith("results.csv"):
+                    csv_path_in_zip = f
+                    break
+                    
+            if csv_path_in_zip:
+                print(f"Found csv file in zip: {csv_path_in_zip}")
+                extracted_csv_path = base_dir / "results.csv"
+                with z.open(csv_path_in_zip) as source, open(extracted_csv_path, "wb") as target:
+                    shutil.copyfileobj(source, target)
+                print(f"[SUCCESS] Saved results CSV to: {extracted_csv_path}")
+            else:
+                print("[!] Error: results.csv not found inside the ZIP archive!")
+                
+            # Find last_checkpoint.pt path dynamically
+            last_checkpoint_path_in_zip = None
+            for f in all_files:
+                if f.endswith("last_checkpoint.pt"):
+                    last_checkpoint_path_in_zip = f
+                    break
+                    
+            if last_checkpoint_path_in_zip:
+                print(f"Found last checkpoint file in zip: {last_checkpoint_path_in_zip}")
+                extracted_last_checkpoint_path = base_dir / "last_checkpoint.pt"
+                with z.open(last_checkpoint_path_in_zip) as source, open(extracted_last_checkpoint_path, "wb") as target:
+                    shutil.copyfileobj(source, target)
+                print(f"[SUCCESS] Saved last checkpoint to: {extracted_last_checkpoint_path}")
+            else:
+                print("[!] Warning: last_checkpoint.pt not found inside the ZIP archive!")
+                
     except Exception as e:
         print(f"[!] Error during extraction: {e}")
         

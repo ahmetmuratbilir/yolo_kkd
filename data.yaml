@@ -1,4 +1,4 @@
-path: C:/Users/ahmet murat bilir/Desktop/nukleerraktoruygulaması/yolo_egitim/datasets/combined_ppe
+path: C:/Users/ahmet murat bilir/Desktop/nukleerraktoruygulaması/okuldakiler/yolo_egitim/datasets/combined_ppe
 train: train/images
 val: valid/images
 test: test/images

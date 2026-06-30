@@ -9,9 +9,9 @@ def run_cmd(cmd):
 
 def main():
     base_dir = Path(__file__).parent
-    kaggle_exe = base_dir / ".venv" / "Scripts" / "kaggle.exe"
-    if not kaggle_exe.exists():
-        print("[!] kaggle.exe not found at expected location.")
+    python_exe = base_dir / ".venv" / "Scripts" / "python.exe"
+    if not python_exe.exists():
+        print("[!] python.exe not found at expected location.")
         return
 
     print("Checking dataset status on Kaggle...")
@@ -20,7 +20,7 @@ def main():
     # Wait until dataset is ready
     retries = 30
     for i in range(retries):
-        code, stdout, stderr = run_cmd(f'"{kaggle_exe}" datasets status {dataset_ref}')
+        code, stdout, stderr = run_cmd(f'"{python_exe}" -m kaggle datasets status {dataset_ref}')
         if code == 0:
             status = stdout.lower()
             print(f"  Dataset status check {i+1}/{retries}: {status}")
@@ -37,14 +37,14 @@ def main():
     # Push the kernel
     print("\nPushing training kernel to Kaggle...")
     kernel_dir = base_dir / "kaggle_kernel"
-    code, stdout, stderr = run_cmd(f'"{kaggle_exe}" kernels push -p "{kernel_dir}"')
+    code, stdout, stderr = run_cmd(f'"{python_exe}" -m kaggle kernels push -p "{kernel_dir}" --accelerator NvidiaTeslaT4')
     
     if code == 0:
         print("\n" + "="*60)
         print("[SUCCESS] Kernel pushed successfully to Kaggle!")
         print(stdout)
         print("You can monitor the training progress here:")
-        print("  https://www.kaggle.com/muratbilir/custom-ppe-v4")
+        print("  https://www.kaggle.com/muratbilir/custom-ppe-v4-training")
         print("="*60)
     else:
         print(f"\n[!] Failed to push kernel: {stderr or stdout}")

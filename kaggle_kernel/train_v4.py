@@ -1,20 +1,20 @@
 """
-Kaggle Eğitim Scripti — KKD Tespit Modeli V4
-=============================================
-Seçenek 2 implementasyonu:
-  - /kaggle/input/combined-ppe-v2/ → mevcut büyük dataset (extract edilecek)
-  - /kaggle/input/gloves-ppe-zips-cleaned/ → 5 küçük gloves ZIP (~120 MB)
-  - Notebook içinde merge yapılır, sonra yolo11m.pt ile eğitim başlar
+Kaggle Eğitim Scripti — KKD Tespit Modeli V4  [SEANS 3]
+=========================================================
+Değişiklikler (Seans 1'e göre):
+  - Model     : best.pt (Seans 1'den, 9 epoch öğrenmiş ağırlıklar)
+  - lr0       : 0.0001  (fine-tune için düşürüldü, seans 1: 0.001)
+  - lrf       : 0.001   (cosine schedule sonu lr, seans 1: 0.01)
+  - dropout   : 0.1     (aynı)
+  - cos_lr    : True    (aynı)
+  - patience  : 25      (aynı)
+  - mixup     : 0.15    (aynı)
+  - copy_paste: 0.1     (aynı)
+  - epochs    : 150     (patience erken durdurur)
 
-Parametreler (V3'e göre değişiklikler):
-  - Model     : yolo11m.pt (temiz pretrained, zincirleme yok)
-  - dropout   : 0.1   (önceki: 0.0)
-  - cos_lr    : True  (önceki: False)
-  - patience  : 25    (önceki: 15/20)
-  - lr0       : 0.001 (önceki: 0.0005)
-  - mixup     : 0.15  (önceki: 0.0)
-  - copy_paste: 0.1   (önceki: 0.0)
-  - epochs    : 150   (patience erken durdurur, ~60-80 epoch bekleniyor)
+YENİ: Her epoch sonunda last.pt otomatik olarak
+      /kaggle/working/last_checkpoint.pt adıyla kaydedilir.
+      Seans 3'te bu dosya kullanılarak resume=True yapılabilir.
 """
 
 import os
@@ -44,8 +44,10 @@ GLOVES_INPUT_DIR = KAGGLE_INPUT / "gloves-ppe-zips-cleaned"
 # Sınıf ID'leri (data.yaml ile birebir aynı)
 GLOVES_POS_ID = 5
 GLOVES_NEG_ID = 6
+GOGGLES_POS_ID = 7
+GOGGLES_NEG_ID = 8
 
-# Gloves ZIP eşleştirmeleri
+# Gloves & Goggles ZIP eşleştirmeleri
 ZIP_CONFIGS = [
     ("gloves_v1i_yolov8.zip",
      {0: GLOVES_NEG_ID, 1: GLOVES_POS_ID},
@@ -62,6 +64,9 @@ ZIP_CONFIGS = [
     ("gloves_v1i_yolov8_1.zip",
      {0: GLOVES_POS_ID},
      "gloves.v1i(1)"),
+    ("safety_glasses_v5.zip",
+     {0: GOGGLES_POS_ID, 1: GOGGLES_NEG_ID},
+     "Safety Glasses v5 (glasses/no_glasses)"),
 ]
 
 VAL_RATIO  = 0.15
@@ -290,11 +295,33 @@ names:
 
 # ─── Adım 4: Eğitim ──────────────────────────────────────────────────────────
 def train():
+    import shutil
+
     print("\n" + "=" * 55)
-    print("EGITIM BASLIYOR — yolo11m.pt (temiz pretrained)")
+    print("EGITIM BASLIYOR — SEANS 3 (Seans 2 best.pt'den fine-tune)")
     print("=" * 55)
 
-    model = YOLO("yolo11m.pt")
+    # Seans 1'den gelen best.pt — 9 epoch öğrenmiş ağırlıklar
+    CHECKPOINT_PT = KAGGLE_INPUT / "kkd-v4-checkpoint" / "best.pt"
+    if not CHECKPOINT_PT.exists():
+        raise FileNotFoundError(
+            f"[HATA] Checkpoint bulunamadi: {CHECKPOINT_PT}\n"
+            "Kaggle dataset kaynagi olarak 'muratbilir/kkd-v4-checkpoint' eklendiğinden emin olun."
+        )
+    print(f"[OK] Checkpoint yukleniyor: {CHECKPOINT_PT}  ({CHECKPOINT_PT.stat().st_size/1e6:.1f} MB)")
+    model = YOLO(str(CHECKPOINT_PT))
+
+    # Her epoch sonunda last.pt'yi /kaggle/working/ altına kopyala
+    # Boylece seans bitmeden once bile son checkpoint kayitli olur
+    LAST_DST = KAGGLE_WORKING / "last_checkpoint.pt"
+
+    def on_train_epoch_end(trainer):
+        last_src = Path(trainer.save_dir) / "weights" / "last.pt"
+        if last_src.exists():
+            shutil.copy2(str(last_src), str(LAST_DST))
+            print(f"  [checkpoint] last.pt kaydedildi -> {LAST_DST}  (epoch {trainer.epoch+1})")
+
+    model.add_callback("on_train_epoch_end", on_train_epoch_end)
 
     results = model.train(
         data        = str(DATA_YAML),
@@ -304,11 +331,11 @@ def train():
         imgsz       = 640,
         device      = 0,
 
-        # Optimizer
+        # Optimizer — fine-tune icin dusuk lr
         optimizer   = "AdamW",
-        lr0         = 0.001,        # temiz baslangiç — yüksek lr dogru
-        lrf         = 0.01,
-        cos_lr      = True,         # cosine schedule
+        lr0         = 0.0001,       # Fine-tune: seans 1'in 10'da 1'i (0.001 -> 0.0001)
+        lrf         = 0.001,        # Cosine schedule sonu lr
+        cos_lr      = True,         # Cosine schedule
         momentum    = 0.937,
         weight_decay= 0.0005,
 
