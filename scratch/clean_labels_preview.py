@@ -48,7 +48,7 @@ def clean_yolo_labels(dataset_path):
             
         valid_boxes = []
         has_person = False
-        has_ppe = False  # Baret, yelek, gözlük, eldiven var mı?
+        has_body_ppe = False  # Baret veya yelek var mı? (Gözlük/Eldiven yakın çekimlerinde insan kutusu aranmaz)
         
         seen_boxes = set()
         file_changed = False
@@ -95,17 +95,14 @@ def clean_yolo_labels(dataset_path):
             
             if cls_id == CLASS_PERSON:
                 has_person = True
-            elif cls_id in [CLASS_HELMET_POS, CLASS_HELMET_NEG, CLASS_VEST_POS, CLASS_VEST_NEG, CLASS_GLOVES_POS, CLASS_GLOVES_NEG, CLASS_GOGGLES_POS, CLASS_GOGGLES_NEG]:
-                has_ppe = True
+            elif cls_id in [CLASS_HELMET_POS, CLASS_HELMET_NEG, CLASS_VEST_POS, CLASS_VEST_NEG]:
+                has_body_ppe = True
                 
             valid_boxes.append((cls_id, x, y, w, h))
             
-        # 4. Kural Kontrolü: PPE ekipmanı var ama Person (insan) kutusu yoksa
-        # Bu ciddi bir etiket eksikliğidir. 
-        if has_ppe and not has_person:
+        # 4. Kural Kontrolü: Baret veya yelek (gövde İSG) var ama Person (insan) kutusu yoksa
+        if has_body_ppe and not has_person:
             stats["missing_person_context"] += 1
-            # Çözüm: İnsan kutusu eksik olan bu resimlerin etiketini tamamen silerek modelin yanlış öğrenmesini engelleyebiliriz.
-            # Alternatif olarak bu dosyaları temizleyip eğitime sokmamak en sağlıklı yoldur.
             valid_boxes = [] # Boşaltarak dosyayı sileceğiz veya temizleyeceğiz.
             file_changed = True
             

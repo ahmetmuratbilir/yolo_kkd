@@ -217,7 +217,7 @@ def clean_dataset_labels():
             
         valid_boxes = []
         has_person = False
-        has_ppe = False
+        has_body_ppe = False  # Sadece baret veya yelek var mı? (Gözlük/Eldiven yakın çekimlerinde insan kutusu aranmaz)
         seen_boxes = set()
         file_changed = False
         
@@ -260,13 +260,13 @@ def clean_dataset_labels():
             
             if cls_id == CLASS_PERSON:
                 has_person = True
-            elif cls_id in [CLASS_HELMET_POS, CLASS_HELMET_NEG, CLASS_VEST_POS, CLASS_VEST_NEG, CLASS_GLOVES_POS, CLASS_GLOVES_NEG, CLASS_GOGGLES_POS, CLASS_GOGGLES_NEG]:
-                has_ppe = True
+            elif cls_id in [CLASS_HELMET_POS, CLASS_HELMET_NEG, CLASS_VEST_POS, CLASS_VEST_NEG]:
+                has_body_ppe = True
                 
             valid_boxes.append((cls_id, x, y, w, h))
             
-        # Kural: PPE var ama insan kutusu yoksa -> Dosyayı temizle
-        if has_ppe and not has_person:
+        # Kural: Baret veya yelek (gövde İSG) var ama insan kutusu yoksa -> Dosyayı temizle
+        if has_body_ppe and not has_person:
             stats["missing_person_context"] += 1
             valid_boxes = []
             file_changed = True
