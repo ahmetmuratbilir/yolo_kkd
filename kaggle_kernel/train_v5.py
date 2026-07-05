@@ -289,6 +289,109 @@ def clean_dataset_labels():
     print(f"  Insansiz PPE Temizleme (Eleme)     : {stats['missing_person_context']:,}")
     print("[OK] Veri temizleme adimi tamamlandi.")
 
+# ─── Adım 3.5: Dinamik Sınıf Dengeleme (Dynamic Stratification) ───────────────
+def stratify_dataset_labels():
+    print("\n" + "=" * 55)
+    print("DINAMIK SINIF DENGELEME (STRATIFICATION) PIPELINE")
+    print("=" * 55)
+    
+    import random
+    import shutil
+    
+    # Target classes to check and balance: {class_id: (min_valid_files, min_test_files)}
+    TARGET_CONFIGS = {
+        8: (100, 50),  # goggles_neg için en az 100 valid, 50 test
+        7: (200, 100), # goggles_pos için en az 200 valid, 100 test
+    }
+    
+    train_labels_dir = DATASET_DIR / "train" / "labels"
+    train_images_dir = DATASET_DIR / "train" / "images"
+    
+    for cid, (min_valid, min_test) in TARGET_CONFIGS.items():
+        # Mevcut valid/test sayılarını sayalım
+        valid_labels_dir = DATASET_DIR / "valid" / "labels"
+        test_labels_dir = DATASET_DIR / "test" / "labels"
+        
+        valid_existing = 0
+        if valid_labels_dir.exists():
+            for f in valid_labels_dir.glob("*.txt"):
+                try:
+                    with open(f, "r", encoding="utf-8", errors="ignore") as file_read:
+                        if any(int(line.split()[0]) == cid for line in file_read if line.strip().split()):
+                            valid_existing += 1
+                except:
+                    pass
+                    
+        test_existing = 0
+        if test_labels_dir.exists():
+            for f in test_labels_dir.glob("*.txt"):
+                try:
+                    with open(f, "r", encoding="utf-8", errors="ignore") as file_read:
+                        if any(int(line.split()[0]) == cid for line in file_read if line.strip().split()):
+                            test_existing += 1
+                except:
+                    pass
+        
+        needed_valid = max(0, min_valid - valid_existing)
+        needed_test = max(0, min_test - test_existing)
+        
+        if needed_valid == 0 and needed_test == 0:
+            print(f"  [OK] Sınıf {cid} zaten dengeli. Valid: {valid_existing}, Test: {test_existing}")
+            continue
+            
+        print(f"  Sınıf {cid} için eksik bulundu -> Validasyon İhtiyacı: {needed_valid}, Test İhtiyacı: {needed_test}")
+        
+        # Train içindeki eşleşen dosyaları bul
+        matching_files = []
+        for file_path in train_labels_dir.glob("*.txt"):
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    if any(int(line.strip().split()[0]) == cid for line in f if line.strip().split()):
+                        matching_files.append(file_path)
+            except:
+                pass
+                
+        total_found = len(matching_files)
+        if total_found < (needed_valid + needed_test):
+            print(f"  [!] Uyarı: Sınıf {cid} için yeterli kaynak dosya yok. Bulunan: {total_found}")
+            needed_valid = int(total_found * 0.7)
+            needed_test = total_found - needed_valid
+            
+        random.seed(42)
+        random.shuffle(matching_files)
+        
+        to_valid = matching_files[:needed_valid]
+        to_test = matching_files[needed_valid:needed_valid + needed_test]
+        
+        def move_pair(label_path, target_split):
+            dest_lbl = DATASET_DIR / target_split / "labels" / label_path.name
+            dest_lbl.parent.mkdir(parents=True, exist_ok=True)
+            
+            img_name = label_path.stem + ".jpg"
+            src_img = train_images_dir / img_name
+            if not src_img.exists():
+                for ext in [".jpeg", ".png", ".JPG", ".PNG"]:
+                    if (train_images_dir / (label_path.stem + ext)).exists():
+                        src_img = train_images_dir / (label_path.stem + ext)
+                        img_name = label_path.stem + ext
+                        break
+                        
+            if not src_img.exists():
+                return False
+                
+            dest_img = DATASET_DIR / target_split / "images" / img_name
+            dest_img.parent.mkdir(parents=True, exist_ok=True)
+            
+            shutil.move(str(label_path), str(dest_lbl))
+            shutil.move(str(src_img), str(dest_img))
+            return True
+
+        moved_valid = sum(1 for lbl in to_valid if move_pair(lbl, "valid"))
+        moved_test = sum(1 for lbl in to_test if move_pair(lbl, "test"))
+        
+        print(f"  Sınıf {cid} için validasyon setine {moved_valid}, test setine {moved_test} adet taşındı.")
+    print("[OK] Sınıf dengeleme adımı tamamlandı.")
+
 # ─── Adım 4: data.yaml yaz ───────────────────────────────────────────────────
 def write_yaml():
     content = f"""path: {DATASET_DIR}
@@ -394,5 +497,6 @@ if __name__ == "__main__":
     extract_combined()        # Adım 1
     merge_gloves()            # Adım 2
     clean_dataset_labels()    # Adım 3 (YENİ - Dinamik Temizleme)
+    stratify_dataset_labels() # Adım 3.5 (YENİ - Sınıf Dengeleme)
     write_yaml()              # Adım 4
     train()                   # Adım 5
